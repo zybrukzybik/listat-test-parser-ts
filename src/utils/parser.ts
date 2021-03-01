@@ -9,6 +9,7 @@ function cleanSpaces(arr: Array<string>): Array<string> {
 
 //  RegEX-s
 const validSymbolsRe: RegExp = /[+\-*/()]|\b([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|1000)\b/g
+const correctStartSymbolsRe: RegExp = /^-\d|^\(|^\d/
 const leftParsRe: RegExp = /\(/g
 const rightParsRe: RegExp = /\)/g
 const parsReg: RegExp = /\(([0-9+\-*/]+)\)/
@@ -34,6 +35,10 @@ function assertValidSymbols(str: string): void {
 
     assert(filtered, 'invalid')
     assert(str === filtered.join(''), 'invalid')
+}
+
+const assertCorrectStartSymbol = (str) => {
+    assert(str.match(correctStartSymbolsRe), 'invalid')
 }
 
 function assertInvalidParentheses(str: string): void {
@@ -123,14 +128,19 @@ function calcParentheses(arr: Array<string>): Array<string> {
     return arr.map(replacer)
 }
 
-function calcNumbers(arr: Array<string>): Array<number> {
-    return arr.map((str: string): number => Number(calculator(str)))
+function calcNumbers(arr: Array<string>): Array<string> {
+    return arr.map((str: string): string => calculator(str))
 }
 
-function parser(arr: Array<string>): Array<number> {
+function parser(arr: Array<string>): Array<string> {
     arr = cleanSpaces(arr)
 
-    assertions(arr, assertValidSymbols, assertInvalidParentheses, assertInvalidOp, assertInvalidOrdersOp)
+    assertions(arr,
+        assertValidSymbols,
+        assertCorrectStartSymbol,
+        assertInvalidParentheses,
+        assertInvalidOp,
+        assertInvalidOrdersOp)
 
     arr = calcParentheses(arr)
 
