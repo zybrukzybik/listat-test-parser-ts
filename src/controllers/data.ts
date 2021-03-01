@@ -20,7 +20,7 @@ async function data(ctx: Context) {
 
     assert(isArr(expr) && !isEmptyArr(expr) && !isArrWithOneEmptyEl(expr), 'invalid')     //  check arr
 
-    const results: Array<number> = parser(expr)
+    const results: Array<string> = parser(expr)
 
     await writeResults(results.join('\n'))
     await responseOk(ctx)
