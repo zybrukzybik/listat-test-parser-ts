@@ -33,12 +33,12 @@ function elBehind(str: string, operator: string): Array<string> {
 function assertValidSymbols(str: string): void {
     const filtered: Array<string> = str.match(validSymbolsRe)
 
-    assert(filtered, 'invalid')
-    assert(str === filtered.join(''), 'invalid')
+    assert(filtered, 'invalid symbols')
+    assert(str === filtered.join(''), 'invalid symbols')
 }
 
 const assertCorrectStartSymbol = (str) => {
-    assert(str.match(correctStartSymbolsRe), 'invalid')
+    assert(str.match(correctStartSymbolsRe), 'invalid start symbol')
 }
 
 function assertInvalidParentheses(str: string): void {
@@ -46,16 +46,16 @@ function assertInvalidParentheses(str: string): void {
     const rightPars = str.match(rightParsRe)
 
     if (leftPars && rightPars) {
-        assert(leftPars.length === rightPars.length, 'invalid')
+        assert(leftPars.length === rightPars.length, 'invalid parentheses')
     }
 }
 
 function assertInvalidOp(str: string): void {
-    assert(!str.match(invalidOpRe), 'invalid')
+    assert(!str.match(invalidOpRe), 'invalid double operators')
 }
 
 function assertInvalidOrdersOp(str: string): void {
-    assert(!str.match(invalidOrderOpRe), 'invalid')
+    assert(!str.match(invalidOrderOpRe), 'invalid order of operators')
 }
 
 function assertions(arr: Array<string>, ...assertions: Array<Function>): void {
