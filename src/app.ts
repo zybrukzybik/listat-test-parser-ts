@@ -8,6 +8,7 @@ import createFile from './utils/writeResult'
 import {responseInvalid} from "./utils/responses";
 import resultRoute from './controllers/result'
 import dataRoute from './controllers/data'
+import errors from "./utils/errors";
 
 const HOST: string = process.env.HOST || '127.0.0.1'
 const PORT: number = Number(process.env.PORT) || 3000
@@ -21,7 +22,7 @@ app.use(async (ctx: Context, next: Function) => {
     try {
         await next()
     } catch (err) {
-        (err.message === 'invalid') ? responseInvalid(err, ctx) : console.log(err)
+        (errors.includes(err.message)) ? responseInvalid(err, ctx) : console.log(err)
     }
 })
 
